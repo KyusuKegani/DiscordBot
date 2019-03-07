@@ -20,7 +20,7 @@ async def on_message(message):
         # 送り主がBotだった場合反応したくないので
         if client.user != message.author:
             # メッセージを書きます
-            m = "おはようでし" + message.author.name + "！"
+            m = "おはでし" + message.author.name + "！"
             # メッセージが送られてきたチャンネルへメッセージを送ります
             await client.send_message(message.channel, m)
 

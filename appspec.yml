@@ -1,0 +1,5 @@
+version: 0.0
+os: linux
+files: 
+  - source: /
+    destinatiomn: /home/ec2-user/discord

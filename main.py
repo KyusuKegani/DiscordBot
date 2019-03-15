@@ -1,37 +1,55 @@
 import discord
 import settings
-import gachi
+import stage
 import formatter
+from discord.ext import commands
 
 STATUS_ERROR_MESSAGE = "APIサーバエラーでし！！！！！"
 
 BOT_TOKEN = settings.BT
-client = discord.Client()
+
+# https://qiita.com/junpiiiiiiik/items/79c2219da6b5e2c06ed8
+bot = commands.Bot(command_prefix="/")
 
 
-@client.event
+@bot.event
 async def on_ready():
     print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
+    print(bot.user.name)
+    print(bot.user.id)
     print('------')
 
 
-# API
-@client.event
-async def on_message(message):
-    if message.content in {'gachi', 'gati', 'ガチマ'}:
-        # 送り主がBotだった場合反応しない
-        if client.user != message.author:
-            try:
-                msgList = gachi.getstage()
-            except Exception:
-                await client.send_message(message.channel,
-                                          STATUS_ERROR_MESSAGE)
-                # 一度ベタ書きで実装、あとでリファクタリング
-            embed = discord.Embed(title="**これからのガチマッチ**", colour=0xfdf5e4)
-            embed = formatter.embedformat(embed, msgList)
-            await client.send_message(message.channel, embed=embed)
+@bot.command()
+async def gachi(ctx):
+    try:
+        msgList = stage.getstage("gachi")
+    except Exception:
+        await ctx.send(STATUS_ERROR_MESSAGE)
+    embed = discord.Embed(title="**これからのガチマッチ**", color=0xf71f71)
+    embed = formatter.embedformat(embed, msgList)
+    await ctx.send(embed=embed)
 
 
-client.run(BOT_TOKEN)
+@bot.command()
+async def reg(ctx):
+    try:
+        msgList = stage.getstage("regular")
+    except Exception:
+        await ctx.send(STATUS_ERROR_MESSAGE)
+    embed = discord.Embed(title="**これからのレギュラーマッチ**", color=0xf71f71)
+    embed = formatter.embedformat(embed, msgList)
+    await ctx.send(embed=embed)
+
+
+@bot.command()
+async def leag(ctx):
+    try:
+        msgList = stage.getstage("league")
+    except Exception:
+        await ctx.send(STATUS_ERROR_MESSAGE)
+    embed = discord.Embed(title="**これからのリーグマッチ**", color=0xf71f71)
+    embed = formatter.embedformat(embed, msgList)
+    await ctx.send(embed=embed)
+
+bot.run(BOT_TOKEN)

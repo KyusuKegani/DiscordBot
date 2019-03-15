@@ -1,5 +1,9 @@
 import discord
 import settings
+import gachi
+import formatter
+
+STATUS_ERROR_MESSAGE = "APIサーバエラーでし！！！！！"
 
 BOT_TOKEN = settings.BT
 client = discord.Client()
@@ -13,15 +17,21 @@ async def on_ready():
     print('------')
 
 
+# API
 @client.event
 async def on_message(message):
-    # 「おはよう」で始まるか調べる
-    if message.content.startswith("おはよう"):
-        # 送り主がBotだった場合反応したくないので
+    if message.content in {'gachi', 'gati', 'ガチマ'}:
+        # 送り主がBotだった場合反応しない
         if client.user != message.author:
-            # メッセージを書きます
-            m = "おはでし" + message.author.name + "！"
-            # メッセージが送られてきたチャンネルへメッセージを送ります
-            await client.send_message(message.channel, m)
+            try:
+                msgList = gachi.getstage()
+            except Exception:
+                await client.send_message(message.channel,
+                                          STATUS_ERROR_MESSAGE)
+                # 一度ベタ書きで実装、あとでリファクタリング
+            embed = discord.Embed(title="**これからのガチマッチ**", colour=0xfdf5e4)
+            embed = formatter.embedformat(embed, msgList)
+            await client.send_message(message.channel, embed=embed)
+
 
 client.run(BOT_TOKEN)

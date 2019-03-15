@@ -5,19 +5,25 @@ import formatter
 STATUS_OK = 200
 
 
+# APIを叩いてステージ情報を取得する。
+# rule: 取得したいルール
 def getstage(rule):
-    # 非公式API: https://spla2.yuu26.com/
+    # 非公式API: https://spla2.yuu26.com/のURLの生成
     url_now = 'https://spla2.yuu26.com/{0}/now'.format(rule)
     url_next = 'https://spla2.yuu26.com/{0}/next_all'.format(rule)
-    # APIの利用方法によりUser Agentを偽装
+
+    # APIの利用方法に指定があるためUser Agentを偽装
     ua = 'Discord Bot/0.1 (twitter @bser_assistant)'
     headers = {'User-Agent': ua}
+
     res_now = requests.get(url_now, headers=headers)
     res_next = requests.get(url_next, headers=headers)
     msgList = []
+    
+    # STATUSが200であることを確認してからパースする
     if (res_next.status_code == STATUS_OK
             and res_now.status_code == STATUS_OK):
-        # STATUSが200であることを確認してからパースする
+
         lists_now = json.loads(res_now.text)
         lists_next = json.loads(res_next.text)
 

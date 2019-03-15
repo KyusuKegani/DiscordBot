@@ -7,6 +7,8 @@ MESSAGE_FORMAT_RULE = """{0}"""
 MESSAGE_FORMAT_STAGE = """{0},{1}"""
 
 
+# embedを生成する際に使用するフォーマッタ
+# msgListには日時→ルール→ステージの順番で情報が格納されていることが前提
 def embedformat(embed, msgList):
     index = 0
     for msg in msgList:

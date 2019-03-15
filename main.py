@@ -8,7 +8,7 @@ STATUS_ERROR_MESSAGE = "APIサーバエラーでし！！！！！"
 
 BOT_TOKEN = settings.BT
 
-# https://qiita.com/junpiiiiiiik/items/79c2219da6b5e2c06ed8
+# スマホからの入力のしやすさを考慮して接頭辞"/"に、Discordのものとも被っているので変更する予定有り
 bot = commands.Bot(command_prefix={"/"})
 
 
@@ -19,7 +19,7 @@ async def on_ready():
     print(bot.user.id)
     print('------')
 
-
+# ガチマッチのステージ情報を取得するコマンド
 @bot.command()
 async def gachi(ctx):
     try:
@@ -30,7 +30,7 @@ async def gachi(ctx):
     embed = formatter.embedformat(embed, msgList)
     await ctx.send(embed=embed)
 
-
+# レギュラーマッチのステージ情報を取得するコマンド
 @bot.command()
 async def reg(ctx):
     try:
@@ -41,7 +41,18 @@ async def reg(ctx):
     embed = formatter.embedformat(embed, msgList)
     await ctx.send(embed=embed)
 
+# regコマンドと同様、Botに柔軟性を持たせるため、別コマンドでも実装
+@bot.command()
+async def regular(ctx):
+    try:
+        msgList = stage.getstage("regular")
+    except Exception:
+        await ctx.send(STATUS_ERROR_MESSAGE)
+    embed = discord.Embed(title="**これからのレギュラーマッチ**", color=0xf71f71)
+    embed = formatter.embedformat(embed, msgList)
+    await ctx.send(embed=embed)
 
+# リーグマッチのステージ情報を取得するコマンド
 @bot.command()
 async def leag(ctx):
     try:
@@ -53,17 +64,7 @@ async def leag(ctx):
     await ctx.send(embed=embed)
 
 
-@bot.command()
-async def regular(ctx):
-    try:
-        msgList = stage.getstage("regular")
-    except Exception:
-        await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**これからのレギュラーマッチ**", color=0xf71f71)
-    embed = formatter.embedformat(embed, msgList)
-    await ctx.send(embed=embed)
-
-
+# leagコマンドと同様、Botに柔軟性を持たせるために実装
 @bot.command()
 async def league(ctx):
     try:
@@ -77,7 +78,7 @@ async def league(ctx):
 
 bot.remove_command("help")
 
-
+# helpコマンドの実装、コマンドを追加した際にはここを編集すること！！！！！
 @bot.command()
 async def help(ctx):
     embed = discord.Embed(
@@ -94,19 +95,17 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 
+# infoコマンド、Botに関するメタ的な情報を格納
 @bot.command()
 async def info(ctx):
     embed = discord.Embed(
         title="ブキチBot(改)",
         description="Splatoon2の各種ステージ情報を教えてくれるBotでし！！！！！！！",
         color=0xf71f71)
-
     embed.add_field(name="作成者", value="Yusuke Sabi")
-
     embed.add_field(
         name="ソースコード",
         value="https://github.com/YusukeSabi/DiscordBot")
-
     await ctx.send(embed=embed)
 
 

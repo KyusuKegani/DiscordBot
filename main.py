@@ -7,6 +7,11 @@ from discord.ext import commands
 STATUS_ERROR_MESSAGE = "APIサーバエラーでし！！！！！"
 
 BOT_TOKEN = settings.BT
+REGULAR_COLOR = 0x95d10a
+GACHI_COLOR = 0xf2660d
+LEAGUE_COLOR = 0xf12e7d
+SALMON_COLOR = 0xe35226
+
 
 # スマホからの入力のしやすさを考慮して接頭辞"/"に、Discordのものとも被っているので変更する予定有り
 bot = commands.Bot(command_prefix={"/"})
@@ -19,6 +24,7 @@ async def on_ready():
     print(bot.user.id)
     print('------')
 
+
 # ガチマッチのステージ情報を取得するコマンド
 @bot.command()
 async def gachi(ctx):
@@ -26,9 +32,10 @@ async def gachi(ctx):
         msgList = stage.getstage("gachi")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**これからのガチマッチ**", color=0xf71f71)
+    embed = discord.Embed(title="**これからのガチマッチ**", color=GACHI_COLOR)
     embed = formatter.embedformat(embed, msgList)
     await ctx.send(embed=embed)
+
 
 # レギュラーマッチのステージ情報を取得するコマンド
 @bot.command()
@@ -37,9 +44,10 @@ async def reg(ctx):
         msgList = stage.getstage("regular")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**これからのレギュラーマッチ**", color=0xf71f71)
+    embed = discord.Embed(title="**これからのレギュラーマッチ**", color=REGULAR_COLOR)
     embed = formatter.embedformat(embed, msgList)
     await ctx.send(embed=embed)
+
 
 # regコマンドと同様、Botに柔軟性を持たせるため、別コマンドでも実装
 @bot.command()
@@ -48,9 +56,10 @@ async def regular(ctx):
         msgList = stage.getstage("regular")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**これからのレギュラーマッチ**", color=0xf71f71)
+    embed = discord.Embed(title="**これからのレギュラーマッチ**", color=REGULAR_COLOR)
     embed = formatter.embedformat(embed, msgList)
     await ctx.send(embed=embed)
+
 
 # リーグマッチのステージ情報を取得するコマンド
 @bot.command()
@@ -59,7 +68,7 @@ async def leag(ctx):
         msgList = stage.getstage("league")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**これからのリーグマッチ**", color=0xf71f71)
+    embed = discord.Embed(title="**これからのリーグマッチ**", color=LEAGUE_COLOR)
     embed = formatter.embedformat(embed, msgList)
     await ctx.send(embed=embed)
 
@@ -71,12 +80,12 @@ async def league(ctx):
         msgList = stage.getstage("league")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**これからのリーグマッチ**", color=0xf71f71)
+    embed = discord.Embed(title="**これからのリーグマッチ**", color=LEAGUE_COLOR)
     embed = formatter.embedformat(embed, msgList)
     await ctx.send(embed=embed)
 
-
 bot.remove_command("help")
+
 
 # helpコマンドの実装、コマンドを追加した際にはここを編集すること！！！！！
 @bot.command()
@@ -104,8 +113,7 @@ async def info(ctx):
         color=0xf71f71)
     embed.add_field(name="作成者", value="Yusuke Sabi")
     embed.add_field(
-        name="ソースコード",
-        value="https://github.com/YusukeSabi/DiscordBot")
+        name="ソースコード", value="https://github.com/YusukeSabi/DiscordBot")
     await ctx.send(embed=embed)
 
 

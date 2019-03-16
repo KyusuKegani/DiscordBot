@@ -13,7 +13,7 @@ def getstage(rule):
     url_next = 'https://spla2.yuu26.com/{0}/next_all'.format(rule)
 
     # APIの利用方法に指定があるためUser Agentを偽装
-    ua = 'Discord Bot/0.1 (twitter @bser_assistant)'
+    ua = 'Discord Bot/v1.0 (twitter @bser_assistant)'
     headers = {'User-Agent': ua}
 
     res_now = requests.get(url_now, headers=headers)

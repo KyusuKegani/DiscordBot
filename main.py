@@ -4,14 +4,13 @@ import stage
 import formatter
 from discord.ext import commands
 
-STATUS_ERROR_MESSAGE = "APIサーバエラーでし！！！！！"
+STATUS_ERROR_MESSAGE = "エラーでし！！！！！"
 
 BOT_TOKEN = settings.BT
 REGULAR_COLOR = 0x95d10a
 GACHI_COLOR = 0xf2660d
 LEAGUE_COLOR = 0xf12e7d
 SALMON_COLOR = 0xe35226
-
 
 # スマホからの入力のしやすさを考慮して接頭辞"/"に、Discordのものとも被っているので変更する予定有り
 bot = commands.Bot(command_prefix={"/"})
@@ -29,11 +28,11 @@ async def on_ready():
 @bot.command()
 async def gachi(ctx):
     try:
-        msgList = stage.getstage("gachi")
+        msgList = stage.get_stage("gachi")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
     embed = discord.Embed(title="**これからのガチマッチ**", color=GACHI_COLOR)
-    embed = formatter.embedformat(embed, msgList)
+    embed = formatter.stage_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
 
@@ -41,11 +40,11 @@ async def gachi(ctx):
 @bot.command()
 async def reg(ctx):
     try:
-        msgList = stage.getstage("regular")
+        msgList = stage.get_stage("regular")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
     embed = discord.Embed(title="**これからのレギュラーマッチ**", color=REGULAR_COLOR)
-    embed = formatter.embedformat(embed, msgList)
+    embed = formatter.stage_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
 
@@ -53,11 +52,11 @@ async def reg(ctx):
 @bot.command()
 async def regular(ctx):
     try:
-        msgList = stage.getstage("regular")
+        msgList = stage.get_stage("regular")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
     embed = discord.Embed(title="**これからのレギュラーマッチ**", color=REGULAR_COLOR)
-    embed = formatter.embedformat(embed, msgList)
+    embed = formatter.stage_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
 
@@ -65,11 +64,11 @@ async def regular(ctx):
 @bot.command()
 async def leag(ctx):
     try:
-        msgList = stage.getstage("league")
+        msgList = stage.get_stage("league")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
     embed = discord.Embed(title="**これからのリーグマッチ**", color=LEAGUE_COLOR)
-    embed = formatter.embedformat(embed, msgList)
+    embed = formatter.stage_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
 
@@ -77,12 +76,37 @@ async def leag(ctx):
 @bot.command()
 async def league(ctx):
     try:
-        msgList = stage.getstage("league")
+        msgList = stage.get_stage("league")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
     embed = discord.Embed(title="**これからのリーグマッチ**", color=LEAGUE_COLOR)
-    embed = formatter.embedformat(embed, msgList)
+    embed = formatter.stage_embed_format(embed, msgList)
     await ctx.send(embed=embed)
+
+
+# サーモンランのステージ情報を取得するためのコマンド
+@bot.command()
+async def salmon(ctx):
+    try:
+        msgList = stage.get_salmon()
+    except Exception:
+        await ctx.send(STATUS_ERROR_MESSAGE)
+    embed = discord.Embed(title="**これからのサーモンラン**", color=SALMON_COLOR)
+    embed = formatter.salmon_embed_format(embed, msgList)
+    await ctx.send(embed=embed)
+
+
+# サーモンランのステージ情報を取得するためのコマンド(salmonと同一)
+@bot.command()
+async def sake(ctx):
+    try:
+        msgList = stage.get_salmon()
+    except Exception:
+        await ctx.send(STATUS_ERROR_MESSAGE)
+    embed = discord.Embed(title="**これからのサーモンラン**", color=SALMON_COLOR)
+    embed = formatter.salmon_embed_format(embed, msgList)
+    await ctx.send(embed=embed)
+
 
 bot.remove_command("help")
 
@@ -99,6 +123,8 @@ async def help(ctx):
         name="/reg or regular", value="現在+4回分のレギュラーステージを表示します、ついでにルールも")
     embed.add_field(
         name="/leag or league", value="現在+4回分のリーグマッチのルール/ステージを表示します")
+    embed.add_field(
+        name="/salmon or sake", value="現在わかっているサーモンランのステージを表示します")
     embed.add_field(name="/help", value="このコマンドです、このBotのコマンド一覧を表示します")
     embed.add_field(name="/info", value="このBotの情報を表示します")
     await ctx.send(embed=embed)

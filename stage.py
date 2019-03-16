@@ -3,7 +3,7 @@ import json
 import formatter
 
 STATUS_OK = 200
-USER_AGENT = "Discord Bukichi Bot/v1.0 (twitter @bser_assistant)"
+USER_AGENT = "Discord Bukichi Bot/v1.1 (twitter @bser_assistant)"
 
 
 def get_salmon():

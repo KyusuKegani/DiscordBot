@@ -98,7 +98,30 @@ async def salmon(ctx):
 
 # サーモンランのステージ情報を取得するためのコマンド(salmonと同一)
 @bot.command()
+async def shake(ctx):
+    try:
+        msgList = stage.get_salmon()
+    except Exception:
+        await ctx.send(STATUS_ERROR_MESSAGE)
+    embed = discord.Embed(title="**これからのサーモンランでし！**", color=SALMON_COLOR)
+    embed = formatter.salmon_embed_format(embed, msgList)
+    await ctx.send(embed=embed)
+
+
+# サーモンランのステージ情報を取得するためのコマンド(salmonと同一)
+@bot.command()
 async def sake(ctx):
+    try:
+        msgList = stage.get_salmon()
+    except Exception:
+        await ctx.send(STATUS_ERROR_MESSAGE)
+    embed = discord.Embed(title="**これからのサーモンランでし！**", color=SALMON_COLOR)
+    embed = formatter.salmon_embed_format(embed, msgList)
+    await ctx.send(embed=embed)
+
+
+@bot.command()
+async def random2(ctx):
     try:
         msgList = stage.get_salmon()
     except Exception:
@@ -123,8 +146,7 @@ async def help(ctx):
         name="/reg or regular", value="現在+4回分のレギュラーステージを表示します、ついでにルールも")
     embed.add_field(
         name="/leag or league", value="現在+4回分のリーグマッチのルール/ステージを表示します")
-    embed.add_field(
-        name="/salmon or sake", value="現在わかっているサーモンランのステージを表示します")
+    embed.add_field(name="/salmon or sake or shake", value="現在わかっているサーモンランのステージを表示します")
     embed.add_field(name="/help", value="このコマンドです、このBotのコマンド一覧を表示します")
     embed.add_field(name="/info", value="このBotの情報を表示します")
     await ctx.send(embed=embed)

@@ -31,7 +31,7 @@ async def gachi(ctx):
         msgList = stage.get_stage("gachi")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**これからのガチマッチ**", color=GACHI_COLOR)
+    embed = discord.Embed(title="**これからのガチマッチでし！**", color=GACHI_COLOR)
     embed = formatter.stage_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
@@ -43,7 +43,7 @@ async def reg(ctx):
         msgList = stage.get_stage("regular")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**これからのレギュラーマッチ**", color=REGULAR_COLOR)
+    embed = discord.Embed(title="**これからのレギュラーマッチでし！**", color=REGULAR_COLOR)
     embed = formatter.stage_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
@@ -55,7 +55,7 @@ async def regular(ctx):
         msgList = stage.get_stage("regular")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**これからのレギュラーマッチ**", color=REGULAR_COLOR)
+    embed = discord.Embed(title="**これからのレギュラーマッチでし！**", color=REGULAR_COLOR)
     embed = formatter.stage_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
@@ -67,7 +67,7 @@ async def leag(ctx):
         msgList = stage.get_stage("league")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**これからのリーグマッチ**", color=LEAGUE_COLOR)
+    embed = discord.Embed(title="**これからのリーグマッチでし！**", color=LEAGUE_COLOR)
     embed = formatter.stage_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
@@ -79,7 +79,7 @@ async def league(ctx):
         msgList = stage.get_stage("league")
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**これからのリーグマッチ**", color=LEAGUE_COLOR)
+    embed = discord.Embed(title="**これからのリーグマッチでし！**", color=LEAGUE_COLOR)
     embed = formatter.stage_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
@@ -91,7 +91,7 @@ async def salmon(ctx):
         msgList = stage.get_salmon()
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**これからのサーモンラン**", color=SALMON_COLOR)
+    embed = discord.Embed(title="**これからのサーモンランでし！**", color=SALMON_COLOR)
     embed = formatter.salmon_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
@@ -103,7 +103,7 @@ async def sake(ctx):
         msgList = stage.get_salmon()
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**これからのサーモンラン**", color=SALMON_COLOR)
+    embed = discord.Embed(title="**これからのサーモンランでし！**", color=SALMON_COLOR)
     embed = formatter.salmon_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
@@ -116,7 +116,7 @@ bot.remove_command("help")
 async def help(ctx):
     embed = discord.Embed(
         title="ブキチBot(改)",
-        description="Splatoon2の各種ステージ情報を教えてくれるBotです。コマンドはイカの通り",
+        description="Splatoon2の各種ステージ情報を教えてくれるBotでし。コマンドはイカの通りでし！！！！！",
         color=0xf71f71)
     embed.add_field(name="/gachi", value="現在+4回分のガチマッチのルール/ステージを表示します")
     embed.add_field(

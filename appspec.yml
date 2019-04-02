@@ -2,4 +2,9 @@ version: 0.0
 os: linux
 files: 
   - source: /
-    destination: /home/ec2-user/discord
+    destination: /home/ec2-user/discord/DiscordBot
+hooks:
+  AfterInstall:
+    - location: /home/ec2-user/discord/DiscordBot/scripts/restart.sh
+      timeout: 60
+      runas: root

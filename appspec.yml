@@ -5,10 +5,10 @@ files:
     destination: /home/ec2-user/discord/DiscordBot
 hooks:
   BeforeInstall:
-    - location: scripts/remove.sh
+    - location: scripts/BeforeInstall.sh
       timeout: 60
       runas: root
   AfterInstall:
-    - location: scripts/restart.sh
+    - location: scripts/AfterInstall.sh
       timeout: 60
       runas: root

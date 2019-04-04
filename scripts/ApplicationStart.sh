@@ -1,5 +1,5 @@
 #!/bin/sh
 
-pkill -KILL -f "python main.py"
+pkill -KILL -f "python3 main.py"
 cd /home/ec2-user/discord/DiscordBot/
-python main.py &
+python3 main.py &

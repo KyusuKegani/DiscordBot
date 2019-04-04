@@ -32,3 +32,15 @@
 
 * プロセスKillと再実行シェルスクリプトにまとめ、CodeDeploy中で行えるようになりたい
 * CodeDeployを用いて、Pushすると自動的にデプロイが行われるようにする
+
+# 備考
+
+## EC2の中身関連
+* CodeDeployのHookで永続実行させたい場合は単純に"&"をつけるだけではいけない
+   * `~/.pyenv/shims/python main.py > /dev/null 2> /dev/null < /dev/null &`という形で行う。
+   * https://docs.aws.amazon.com/ja_jp/codedeploy/latest/userguide/troubleshooting-deployments.html#troubleshooting-deployments-lifecycle-event-failures
+* kill -SIGKILLが使えない
+    * pkill -KILL -f "python main.py"を使った
+* hook用のスクリプトファイルには`chmod +x`をする必要があるが、CodeDeploy Agent側で自動的にchmodしてくれる
+    * ログファイルにおいてもWARNなのでそんなに気にしなくていい、HOOKの実行結果は/opt/codedeploy-agent/deployment-root/deployment-logs/*のほうが詳しい
+    

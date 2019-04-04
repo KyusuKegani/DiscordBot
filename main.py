@@ -171,7 +171,7 @@ async def help(ctx):
 @bot.command()
 async def info(ctx):
     embed = discord.Embed(
-        title="ブキチBot(改) ver 1.0.1",
+        title="ブキチBot(改) ver 1.0.2",
         description="Splatoon2の各種ステージ情報を教えてくれるBotでし！！！！！！！",
         color=0xf71f71)
     embed.add_field(name="作成者", value="Yusuke Sabi")

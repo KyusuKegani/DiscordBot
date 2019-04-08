@@ -15,6 +15,7 @@ GACHI_COLOR = 0xf2660d
 LEAGUE_COLOR = 0xf12e7d
 SALMON_COLOR = 0xe35226
 EMBED_COLOR = 0xf71f71
+BOMB_COLOR = 0xff2600
 
 # スマホからの入力のしやすさを考慮して接頭辞"/"に、Discordのものとも被っているので変更する予定有り
 bot = commands.Bot(command_prefix={"/"})
@@ -146,6 +147,16 @@ async def random2(ctx):
     await ctx.send(embed=embed)
 
 
+@bot.command()
+async def bomb(ctx):
+    try:
+        msgList = ["http://www.bombmanual.com/ja/"]
+    except Exception:
+        await ctx.send(STATUS_ERROR_MESSAGE)
+    embed = discord.Embed(title="**爆弾解体マニュアルでし！**", color=BOMB_COLOR)
+    embed = formatter.bomb_embed_format(embed, msgList)
+    await ctx.send(embed=embed)
+
 bot.remove_command("help")
 
 
@@ -155,7 +166,7 @@ async def help(ctx):
     embed = discord.Embed(
         title="ブキチBot(改)",
         description="Splatoon2の各種ステージ情報を教えてくれるBotでし。コマンドはイカの通りでし！！！！！",
-        color=0xf71f71)
+        color=EMBED_COLOR)
     embed.add_field(name="/gachi", value="現在+4回分のガチマッチのルール/ステージを表示します")
     embed.add_field(
         name="/reg or regular", value="現在+4回分のレギュラーステージを表示します、ついでにルールも")

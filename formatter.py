@@ -53,6 +53,16 @@ def salmon_embed_format(embed, msgList):
     return embed
 
 
+# 爆弾解体マニュアルを表示するためのフォーマッタ
+# msgListにはURLが表示されている！単純！
+def bomb_embed_format(embed, msgList):
+    for msg in msgList:
+        embed.set_thumbnail(
+            url="http://www.bombmanual.com/ja/img/kt-file-icon-opaque.png")
+        embed.add_field(name="爆弾解体マニュアル", value=msg)
+    return embed
+
+
 # JSONを受け取り、ステージ情報に整形し、そのリストを返す関数
 # 日付→ルール→ステージの順で格納されている
 def stage_format(jsonlist, repeat=4):

@@ -15,10 +15,13 @@ def get_random_order(channel_members):
         raise error.NoMemberInVoiceChannelException(NO_MEMBER_ERROR_MESSAGE)
     else:
         randomizer = random.sample(range(1, member_count+1), k=member_count)
-        memberDict = {}
+        member_dct = {}
         counter = 1
         # Dictのリストに[順番、メンバー名]のように格納
         for member in channel_members:
-            memberDict[randomizer[counter]] = member.name
+            member_dct[randomizer[counter]] = member.name
             counter += 1
-    return memberDict
+
+        # 昇順に表示するようソート
+        member_dct = sorted(member_dct.items())
+    return member_dct

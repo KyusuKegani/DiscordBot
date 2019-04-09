@@ -203,6 +203,8 @@ async def help(ctx):
     embed.add_field(
         name="/bomb",
         value="爆弾解体マニュアルを表示します(Keep Talking And Nobody Explodes用)")
+    embed.add.field(
+        name="/order", value="現在ボイスチャットにいるユーザに(1..n)までの番号をランダムに割り当てます")
     await ctx.send(embed=embed)
 
 

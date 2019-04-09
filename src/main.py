@@ -157,6 +157,7 @@ async def bomb(ctx):
     embed = formatter.bomb_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
+
 bot.remove_command("help")
 
 

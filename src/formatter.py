@@ -15,6 +15,7 @@ SLASH = "------------------------------------------------------------------"
 
 # embedを生成する際に使用するフォーマッタ
 # msgListには日時→ルール→ステージの順番で情報が格納されていることが前提
+# TODO:stageクラスを作ってそこに格納した方が絶対いい
 def stage_embed_format(embed, msgList):
     index = 0
     for msg in msgList:

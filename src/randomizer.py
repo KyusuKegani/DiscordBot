@@ -1,4 +1,4 @@
-from . import original_exc
+import original_exc
 import random
 # embedを生成する際に使用するフォーマッタ
 # msgListには日時→ルール→ステージの順番で情報が格納されていることが前提

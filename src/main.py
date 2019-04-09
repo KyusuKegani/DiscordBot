@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import discord
-import settings
-import stage
-import formatter
-import randomizer
-import error
+from . import settings
+from . import stage
+from . import formatter
+from . import randomizer
+from . import original_exc
 from discord.ext import commands
 
 STATUS_ERROR_MESSAGE = "エラーでし！！！！！"
@@ -175,7 +175,7 @@ async def order(ctx):
             embed.add_field(name=str(k) + "番目!", value=v)
 
         await ctx.send(embed=embed)
-    except error.NoMemberInVoiceChannelException as e:
+    except original_exc.NoMemberInVoiceChannelException as e:
         await ctx.send(e.message)
     except Exception:
         await ctx.send(STATUS_ERROR_MESSAGE)

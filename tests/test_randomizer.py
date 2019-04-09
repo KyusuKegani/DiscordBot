@@ -1,74 +1,37 @@
 import unittest
-import os
-import json
+import mock
 import src.randomizer as rm
+import src.original_exc as exc
 
 
 # 'python -m unittest *.py'で実行することができる
 class TestFormatter(unittest.TestCase):
-    # サーモンランのうち、ステージ情報とブキ情報があるパターンのテスト
-    def test_salmon_format_with_stage(self):
-        base = os.path.dirname(os.path.abspath(__file__))
-        path = os.path.normpath(
-            os.path.join(base, 'json/salmon_with_stage.json'))
-        f = open(path, "r")
-        json_list = json.load(f)
-        salmon_list = rm.salmon_format(json_list["result"])
-        collect_salmon_list = [
-            "** 3/16 17時 - 3/18 5時 **", "朽ちた箱舟 ポラリス",
-            "https://app.splatoon2.nintendo.net/images/coop_stage/50064ec6e97aac91e70df5fc2cfecf61ad8615fd.png",
-            "ノーチラス47,ノヴァブラスター,オーバーフロッシャー,Rブラスターエリート"
-        ]
-        self.assertEquals(salmon_list, collect_salmon_list)
-        f.close()
+    # 複数人チャンネルいた場合のテスト
+    @mock.patch('random.sample')
+    def test_get_random_order(self, random_call):
+        A = mock.MagicMock(name="A")
+        B = mock.MagicMock(name="B")
+        C = mock.MagicMock(name="C")
+        D = mock.MagicMock(name="D")
+        E = mock.MagicMock(name="E")
 
-    # サーモンランのうち、ステージ情報とブキ情報がないパターンのテスト
-    def test_salmon_format_without_stage(self):
-        base = os.path.dirname(os.path.abspath(__file__))
-        path = os.path.normpath(
-            os.path.join(base, 'json/salmon_without_stage.json'))
-        f = open(path, "r")
-        json_list = json.load(f)
-        salmon_list = fm.salmon_format(json_list["result"])
-        collect_salmon_list = ["** 4/12 21時 - 4/14 15時 **", "", "", ""]
-        self.assertEquals(salmon_list, collect_salmon_list)
-        f.close()
+        channel_members = [A, B, C, D, E]
+        random_call.return_value = [3, 4, 5, 2, 1]
+        member_dct = rm.get_random_order(channel_members)
+        self.assertEqual([(1, E.name), (2, D.name), (3, A.name), (4, B.name),
+                          (5, C.name)], member_dct)
 
-    # ステージ情報のうち、現在のステージだけのテスト
-    def test_stage_format_now(self):
-        base = os.path.dirname(os.path.abspath(__file__))
-        path = os.path.normpath(
-            os.path.join(base, 'json/stage_now_gachi.json'))
-        f = open(path, "r")
-        json_list = json.load(f)
-        stage_list = fm.stage_format(json_list["result"], 1)
-        collect_stage_list = [
-            "** 4/9 9時 - 11時 **", "ガチホコバトル", "海女美術大学,ガンガゼ野外音楽堂"
-        ]
-        self.assertEquals(stage_list, collect_stage_list)
-        f.close()
+    # 一人しかチャンネルいた場合のテスト
+    def test_get_random_order_single(self):
+        A = mock.MagicMock(name="A")
 
-    # ステージ情報のうち、これ以降4つのステージのテスト
-    def test_stage_format_next_all(self):
-        base = os.path.dirname(os.path.abspath(__file__))
-        path = os.path.normpath(
-            os.path.join(base, 'json/stage_next_all_gachi.json'))
-        f = open(path, "r")
-        json_list = json.load(f)
-        stage_list = fm.stage_format(json_list["result"], 4)
-        collect_stage_list = [
-            "** 4/9 11時 - 13時 **",
-            "ガチヤグラ",
-            "ザトウマーケット,チョウザメ造船",
-            "** 4/9 13時 - 15時 **",
-            "ガチアサリ",
-            "タチウオパーキング,フジツボスポーツクラブ",
-            "** 4/9 15時 - 17時 **",
-            "ガチエリア",
-            "アロワナモール,ホッケふ頭",
-            "** 4/9 17時 - 19時 **",
-            "ガチホコバトル",
-            "ショッツル鉱山,モズク農園",
-        ]
-        self.assertEquals(stage_list, collect_stage_list)
-        f.close()
+        channel_members = [A]
+        member_dct = rm.get_random_order(channel_members)
+        self.assertEqual([(1, A.name)], member_dct)
+
+    # 誰もチャンネルいない場合のテスト
+    def test_get_random_order_exception(self):
+        channel_members = []
+        with self.assertRaises(exc.NoMemberInVoiceChannelException):
+            rm.get_random_order(channel_members)
+        

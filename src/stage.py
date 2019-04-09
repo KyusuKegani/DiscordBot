@@ -1,6 +1,6 @@
 import requests
 import json
-import formatter
+from . import formatter
 
 STATUS_OK = 200
 USER_AGENT = "Discord Bukichi Bot/v1.1 (twitter @bser_assistant)"

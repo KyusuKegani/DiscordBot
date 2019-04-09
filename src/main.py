@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import discord
-import settings
-import stage
-import formatter
+from . import settings
+from . import stage
+from . import formatter
+from . import randomizer
+from . import original_exc
 from discord.ext import commands
 
 STATUS_ERROR_MESSAGE = "エラーでし！！！！！"
@@ -158,6 +160,27 @@ async def bomb(ctx):
     await ctx.send(embed=embed)
 
 
+@bot.command()
+async def order(ctx):
+    memberList = {}
+    try:
+        # Voice Channelの取得、現在はチャンネル名が"General"であるチャンネルのみとしている
+        voice_channel = discord.utils.get(
+            ctx.message.guild.voice_channels, name="General")
+        channel_members = voice_channel.members
+        memberList = randomizer.get_random_order(channel_members)
+
+        embed = discord.Embed(title="ランダムに順番を割り当てたでし！", color=BOMB_COLOR)
+        for k, v in memberList.items():
+            embed.add_field(name=str(k) + "番目!", value=v)
+
+        await ctx.send(embed=embed)
+    except original_exc.NoMemberInVoiceChannelException as e:
+        await ctx.send(e.message)
+    except Exception:
+        await ctx.send(STATUS_ERROR_MESSAGE)
+
+
 bot.remove_command("help")
 
 
@@ -180,6 +203,8 @@ async def help(ctx):
     embed.add_field(
         name="/bomb",
         value="爆弾解体マニュアルを表示します(Keep Talking And Nobody Explodes用)")
+    embed.add.field(
+        name="/order", value="現在ボイスチャットにいるユーザに(1..n)までの番号をランダムに割り当てます")
     await ctx.send(embed=embed)
 
 

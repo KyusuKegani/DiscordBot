@@ -1,0 +1,38 @@
+{
+    "result": [
+        {
+            "start": "2019-03-16T17:00:00",
+            "start_utc": "2019-03-16T08:00:00+00:00",
+            "start_t": 1552723200,
+            "end": "2019-03-18T05:00:00",
+            "end_utc": "2019-03-17T20:00:00+00:00",
+            "end_t": 1552852800,
+            "stage": {
+                "image": "https://app.splatoon2.nintendo.net/images/coop_stage/50064ec6e97aac91e70df5fc2cfecf61ad8615fd.png",
+                "name": "朽ちた箱舟 ポラリス"
+            },
+            "weapons": [
+                {
+                    "id": 4040,
+                    "image": "https://app.splatoon2.nintendo.net/images/weapon/d79b99092aa03dc249b1f767197c1ecbda9d3cd7.png",
+                    "name": "ノーチラス47"
+                },
+                {
+                    "id": 200,
+                    "image": "https://app.splatoon2.nintendo.net/images/weapon/3f840ce3cc5ac0b8cbf7451079b57e807d8b95f1.png",
+                    "name": "ノヴァブラスター"
+                },
+                {
+                    "id": 3030,
+                    "image": "https://app.splatoon2.nintendo.net/images/weapon/2835f6d61a4296b4ac3876337884a0c453a4fa4f.png",
+                    "name": "オーバーフロッシャー"
+                },
+                {
+                    "id": 250,
+                    "image": "https://app.splatoon2.nintendo.net/images/weapon/8f64580bb033ba86fa0179179cfeb56b5544fda6.png",
+                    "name": "Rブラスターエリート"
+                }
+            ]
+        }
+    ]
+}

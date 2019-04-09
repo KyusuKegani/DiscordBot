@@ -1,0 +1,36 @@
+{
+    "result": [
+        {
+            "rule": "ガチホコバトル",
+            "rule_ex": {
+                "key": "rainmaker",
+                "name": "ガチホコバトル",
+                "statink": ""
+            },
+            "maps": [
+                "海女美術大学",
+                "ガンガゼ野外音楽堂"
+            ],
+            "maps_ex": [
+                {
+                    "id": 4,
+                    "name": "海女美術大学",
+                    "image": "https://app.splatoon2.nintendo.net/images/stage/5c030a505ee57c889d3e5268a4b10c1f1f37880a.png",
+                    "statink": ""
+                },
+                {
+                    "id": 2,
+                    "name": "ガンガゼ野外音楽堂",
+                    "image": "https://app.splatoon2.nintendo.net/images/stage/187987856bf575c4155d021cb511034931d06d24.png",
+                    "statink": ""
+                }
+            ],
+            "start": "2019-04-09T09:00:00",
+            "start_utc": "2019-04-09T00:00:00+00:00",
+            "start_t": 1554768000,
+            "end": "2019-04-09T11:00:00",
+            "end_utc": "2019-04-09T02:00:00+00:00",
+            "end_t": 1554775200
+        }
+    ]
+}

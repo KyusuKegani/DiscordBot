@@ -1,6 +1,9 @@
 import unittest
 import os
 import json
+import sys
+path = os.path.join(os.path.dirname(__file__), '../src')
+sys.path.append(path)
 import src.formatter as fm
 
 
@@ -19,7 +22,7 @@ class TestFormatter(unittest.TestCase):
             "https://app.splatoon2.nintendo.net/images/coop_stage/50064ec6e97aac91e70df5fc2cfecf61ad8615fd.png",
             "ノーチラス47,ノヴァブラスター,オーバーフロッシャー,Rブラスターエリート"
         ]
-        self.assertEquals(salmon_list, collect_salmon_list)
+        self.assertEqual(salmon_list, collect_salmon_list)
         f.close()
 
     # サーモンランのうち、ステージ情報とブキ情報がないパターンのテスト
@@ -31,7 +34,7 @@ class TestFormatter(unittest.TestCase):
         json_list = json.load(f)
         salmon_list = fm.salmon_format(json_list["result"])
         collect_salmon_list = ["** 4/12 21時 - 4/14 15時 **", "", "", ""]
-        self.assertEquals(salmon_list, collect_salmon_list)
+        self.assertEqual(salmon_list, collect_salmon_list)
         f.close()
 
     # ステージ情報のうち、現在のステージだけのテスト
@@ -45,7 +48,7 @@ class TestFormatter(unittest.TestCase):
         collect_stage_list = [
             "** 4/9 9時 - 11時 **", "ガチホコバトル", "海女美術大学,ガンガゼ野外音楽堂"
         ]
-        self.assertEquals(stage_list, collect_stage_list)
+        self.assertEqual(stage_list, collect_stage_list)
         f.close()
 
     # ステージ情報のうち、これ以降4つのステージのテスト
@@ -70,5 +73,5 @@ class TestFormatter(unittest.TestCase):
             "ガチホコバトル",
             "ショッツル鉱山,モズク農園",
         ]
-        self.assertEquals(stage_list, collect_stage_list)
+        self.assertEqual(stage_list, collect_stage_list)
         f.close()

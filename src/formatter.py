@@ -1,6 +1,6 @@
 import datetime
 
-DATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
+DATE_FORMAT = "%Y-%m-%dT%H:%M:%S"
 MESSAGE_FORMAT_SAME_DAY = """** {0}/{1} {2}時 - {3}時 **"""
 MESSAGE_FORMAT_DIFFERENT_DAY = """** {0}/{1} {2}時 - {3}/{4} {5}時 **"""
 MESSAGE_FORMAT_RULE = """{0}"""

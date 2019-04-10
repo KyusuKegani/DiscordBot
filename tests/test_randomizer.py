@@ -1,12 +1,16 @@
 import unittest
 import mock
+import os
+import sys
+path = os.path.join(os.path.dirname(__file__), '../src')
+sys.path.append(path)
 import src.randomizer as rm
-import src.original_exc as exc
+import original_exc
 
 
 # 'python -m unittest *.py'で実行することができる
 class TestFormatter(unittest.TestCase):
-    # 複数人チャンネルいた場合のテスト
+    # 複数人チャンネルにいた場合のテスト
     @mock.patch('random.sample')
     def test_get_random_order(self, random_call):
         A = mock.MagicMock(name="A")
@@ -16,22 +20,21 @@ class TestFormatter(unittest.TestCase):
         E = mock.MagicMock(name="E")
 
         channel_members = [A, B, C, D, E]
-        random_call.return_value = [3, 4, 5, 2, 1]
+        random_call.return_value = [2, 3, 4, 1, 0]
         member_dct = rm.get_random_order(channel_members)
-        self.assertEqual([(1, E.name), (2, D.name), (3, A.name), (4, B.name),
-                          (5, C.name)], member_dct)
+        self.assertEqual([(0, E.name), (1, D.name), (2, A.name), (3, B.name),
+                          (4, C.name)], member_dct)
 
-    # 一人しかチャンネルいた場合のテスト
+    # 一人のみチャンネルにいた場合のテスト
     def test_get_random_order_single(self):
         A = mock.MagicMock(name="A")
 
         channel_members = [A]
         member_dct = rm.get_random_order(channel_members)
-        self.assertEqual([(1, A.name)], member_dct)
+        self.assertEqual([(0, A.name)], member_dct)
 
-    # 誰もチャンネルいない場合のテスト
+    # 誰もチャンネルにいない場合のテスト
     def test_get_random_order_exception(self):
         channel_members = []
-        with self.assertRaises(exc.NoMemberInVoiceChannelException):
+        with self.assertRaises(original_exc.NoMemberInVoiceChannelException):
             rm.get_random_order(channel_members)
-        

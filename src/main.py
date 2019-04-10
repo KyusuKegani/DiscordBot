@@ -190,7 +190,7 @@ async def help(ctx):
     embed = discord.Embed(
         title="ブキチBot(改)",
         description=
-        "コマンドは https://github.com/YusukeSabi/DiscordBot/commands.md",
+        "コマンドは https://github.com/YusukeSabi/DiscordBot/blob/master/commands.md",
         color=EMBED_COLOR)
     await ctx.send(embed=embed)
 

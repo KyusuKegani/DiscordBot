@@ -1,7 +1,7 @@
 import original_exc
 import random
-# embedを生成する際に使用するフォーマッタ
-# msgListには日時→ルール→ステージの順番で情報が格納されていることが前提
+
+# ボイスチャンネルに番号を割り振るためのモジュール
 
 NO_MEMBER_ERROR_MESSAGE = "ボイスチャンネルに誰もいないでし！！！"
 

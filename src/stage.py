@@ -1,6 +1,7 @@
 import requests
 import json
 import formatter
+import original_exc
 
 STATUS_OK = 200
 USER_AGENT = "Discord Bukichi Bot/v1.1 (twitter @bser_assistant)"
@@ -17,13 +18,14 @@ def get_salmon():
 
     msgList = []
 
+    # ステイタスコードがOKであることを確認
     if (res.status_code == STATUS_OK):
         lists = json.loads(res.text)
         # stageformatを用いて現在のステージから1つを取得
         msgList.extend(formatter.salmon_format(lists["result"]))
         return msgList
     else:
-        raise Exception("BAD STATUS")
+        raise original_exc.BadStatusException("BAD STATUS")
 
 
 # APIを叩いてステージ情報を取得する。

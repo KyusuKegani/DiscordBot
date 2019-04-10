@@ -2,3 +2,8 @@
 class NoMemberInVoiceChannelException(Exception):
     def __init__(self, message):
         self.message = message
+
+
+class BadStatusException(Exception):
+    def __init__(self, message):
+        self.message = message

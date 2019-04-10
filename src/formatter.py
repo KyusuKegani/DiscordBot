@@ -106,7 +106,7 @@ def salmon_format(jsonlist):
         # Python 3.6.5(<3.7.0)のため、fromisoformatは使用していない
         startdt = datetime.datetime.strptime(list["start"], DATE_FORMAT)
         enddt = datetime.datetime.strptime(list["end"], DATE_FORMAT)
-        append_string = "(現在開催中！！！！)"
+
         # 同じ日かによってフォーマットを変更
         if (startdt.day == enddt.day):
             # Ex.”3/15 19時 - 21時”
@@ -119,13 +119,14 @@ def salmon_format(jsonlist):
                 startdt.hour, enddt.month,
                 enddt.day, enddt.hour)
 
+        append_string = "(現在開催中！！！！)"
         # 開催中なら開催中の文字列を追加する
         if(startdt <= datetime.datetime.now() <= enddt):
             salmonList.append(day_msg + append_string)
         else:
             salmonList.append(day_msg)
 
-        # APIでは2つ先以上のステージ、ブキはNULLとなるため、その判定
+        # APIでは2つ先以上のステージはNULLとなるため、その判定
         if (list["stage"] is not None):
             salmonList.append(
                 SALMON_FORMAT_STAGE.format(list["stage"]["name"]))
@@ -135,6 +136,7 @@ def salmon_format(jsonlist):
             salmonList.append("")
             salmonList.append("")
 
+        # 同様にAPIでは2つ先以上のブキ欄はNULLとなるため、その判定
         if (list["weapons"] is not None):
             salmonList.append(
                 SALMON_FORMAT_WEAPON.format(

@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# TODO:相対参照をなくすとテストが通らなくなるので、何とかしないといけない
 import discord
 import settings
 import stage
@@ -36,7 +35,7 @@ async def on_ready():
 async def gachi(ctx):
     try:
         msgList = stage.get_stage("gachi")
-    except Exception:
+    except original_exc.BadStatusException:
         await ctx.send(STATUS_ERROR_MESSAGE)
     embed = discord.Embed(title="**これからのガチマッチでし！**", color=GACHI_COLOR)
     embed = formatter.stage_embed_format(embed, msgList)
@@ -48,7 +47,7 @@ async def gachi(ctx):
 async def reg(ctx):
     try:
         msgList = stage.get_stage("regular")
-    except Exception:
+    except original_exc.BadStatusException:
         await ctx.send(STATUS_ERROR_MESSAGE)
     embed = discord.Embed(title="**これからのレギュラーマッチでし！**", color=REGULAR_COLOR)
     embed = formatter.stage_embed_format(embed, msgList)
@@ -60,7 +59,7 @@ async def reg(ctx):
 async def regular(ctx):
     try:
         msgList = stage.get_stage("regular")
-    except Exception:
+    except original_exc.BadStatusException:
         await ctx.send(STATUS_ERROR_MESSAGE)
     embed = discord.Embed(title="**これからのレギュラーマッチでし！**", color=REGULAR_COLOR)
     embed = formatter.stage_embed_format(embed, msgList)
@@ -72,7 +71,7 @@ async def regular(ctx):
 async def leag(ctx):
     try:
         msgList = stage.get_stage("league")
-    except Exception:
+    except original_exc.BadStatusException:
         await ctx.send(STATUS_ERROR_MESSAGE)
     embed = discord.Embed(title="**これからのリーグマッチでし！**", color=LEAGUE_COLOR)
     embed = formatter.stage_embed_format(embed, msgList)
@@ -84,7 +83,7 @@ async def leag(ctx):
 async def league(ctx):
     try:
         msgList = stage.get_stage("league")
-    except Exception:
+    except original_exc.BadStatusException:
         await ctx.send(STATUS_ERROR_MESSAGE)
     embed = discord.Embed(title="**これからのリーグマッチでし！**", color=LEAGUE_COLOR)
     embed = formatter.stage_embed_format(embed, msgList)
@@ -96,7 +95,7 @@ async def league(ctx):
 async def salmon(ctx):
     try:
         msgList = stage.get_salmon()
-    except Exception:
+    except original_exc.BadStatusException:
         await ctx.send(STATUS_ERROR_MESSAGE)
     embed = discord.Embed(title="**これからのサーモンランでし！**", color=SALMON_COLOR)
     embed = formatter.salmon_embed_format(embed, msgList)
@@ -108,7 +107,7 @@ async def salmon(ctx):
 async def shake(ctx):
     try:
         msgList = stage.get_salmon()
-    except Exception:
+    except original_exc.BadStatusException:
         await ctx.send(STATUS_ERROR_MESSAGE)
     embed = discord.Embed(title="**これからのサーモンランでし！**", color=SALMON_COLOR)
     embed = formatter.salmon_embed_format(embed, msgList)
@@ -120,29 +119,18 @@ async def shake(ctx):
 async def sake(ctx):
     try:
         msgList = stage.get_salmon()
-    except Exception:
+    except original_exc.BadStatusException:
         await ctx.send(STATUS_ERROR_MESSAGE)
     embed = discord.Embed(title="**これからのサーモンランでし！**", color=SALMON_COLOR)
     embed = formatter.salmon_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
-
+# TODO:randomコマンドを実装
 @bot.command()
 async def ran2(ctx):
     try:
         msgList = stage.get_salmon()
-    except Exception:
-        await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**ランダムにブキを割り当てたでし！**", color=SALMON_COLOR)
-    embed = formatter.salmon_embed_format(embed, msgList)
-    await ctx.send(embed=embed)
-
-
-@bot.command()
-async def random2(ctx):
-    try:
-        msgList = stage.get_salmon()
-    except Exception:
+    except original_exc.BadStatusException:
         await ctx.send(STATUS_ERROR_MESSAGE)
     embed = discord.Embed(title="**ランダムにブキを割り当てたでし！**", color=SALMON_COLOR)
     embed = formatter.salmon_embed_format(embed, msgList)
@@ -151,10 +139,7 @@ async def random2(ctx):
 
 @bot.command()
 async def bomb(ctx):
-    try:
-        msgList = ["http://www.bombmanual.com/ja/"]
-    except Exception:
-        await ctx.send(STATUS_ERROR_MESSAGE)
+    msgList = ["http://www.bombmanual.com/ja/"]
     embed = discord.Embed(title="**爆弾解体マニュアルでし！**", color=BOMB_COLOR)
     embed = formatter.bomb_embed_format(embed, msgList)
     await ctx.send(embed=embed)
@@ -177,8 +162,6 @@ async def order(ctx):
         await ctx.send(embed=embed)
     except original_exc.NoMemberInVoiceChannelException as e:
         await ctx.send(e.message)
-    except Exception:
-        await ctx.send(STATUS_ERROR_MESSAGE)
 
 
 bot.remove_command("help")
@@ -189,8 +172,7 @@ bot.remove_command("help")
 async def help(ctx):
     embed = discord.Embed(
         title="ブキチBot(改)",
-        description=
-        "コマンドは https://github.com/YusukeSabi/DiscordBot/blob/master/commands.md",
+        description="コマンドは https://github.com/YusukeSabi/DiscordBot/blob/master/commands.md",
         color=EMBED_COLOR)
     await ctx.send(embed=embed)
 

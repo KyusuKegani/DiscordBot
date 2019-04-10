@@ -14,11 +14,13 @@ def get_random_order(channel_members):
         raise original_exc.NoMemberInVoiceChannelException(
             NO_MEMBER_ERROR_MESSAGE)
     else:
-        randomizer = random.sample(range(1, member_count + 1), k=member_count)
+        randomizer = random.sample(range(0, member_count), k=member_count)
         member_dct = {}
         counter = 0
         # Dictのリストに[順番、メンバー名]のように格納
         for member in channel_members:
+            # ここでOut of boundsとなるため、0-indexedで行なっている
+            # mainの呼び出しのところで1-indexedに変換
             member_dct[randomizer[counter]] = member.name
             counter += 1
 

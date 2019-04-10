@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+# TODO:相対参照をなくすとテストが通らなくなるので、何とかしないといけない
 import discord
 import settings
 import stage
@@ -171,8 +171,8 @@ async def order(ctx):
         memberList = randomizer.get_random_order(channel_members)
 
         embed = discord.Embed(title="ランダムに順番を割り当てたでし！", color=BOMB_COLOR)
-        for k, v in memberList.items():
-            embed.add_field(name=str(k) + "番目!", value=v)
+        for member in memberList:
+            embed.add_field(name=str(member[0]+1) + "番目!", value=member[1])
 
         await ctx.send(embed=embed)
     except original_exc.NoMemberInVoiceChannelException as e:
@@ -190,24 +190,8 @@ async def help(ctx):
     embed = discord.Embed(
         title="ブキチBot(改)",
         description=
-        "Splatoon2の各種ステージ情報を教えてくれるBotでし。コマンドは https://github.com/YusukeSabi/DiscordBot",
+        "コマンドは https://github.com/YusukeSabi/DiscordBot/commands.md",
         color=EMBED_COLOR)
-    embed.add_field(name="/gachi", value="現在+4回分のガチマッチのルール/ステージを表示します")
-    embed.add_field(
-        name="/reg or regular", value="現在+4回分のレギュラーステージを表示します、ついでにルールも")
-    embed.add_field(
-        name="/leag or league", value="現在+4回分のリーグマッチのルール/ステージを表示します")
-    embed.add_field(
-        name="/salmon or sake or shake", value="現在わかっているサーモンランのステージを表示します")
-    embed.add_field(name="/help", value="このコマンドです、このBotのコマンド一覧を表示します")
-    embed.add_field(name="/info", value="このBotの情報を表示します")
-    await ctx.send(embed=embed)
-    embed2 = discord.Embed(title="コマンド続き", color=EMBED_COLOR)
-    embed2.add_field(
-        name="/bomb",
-        value="爆弾解体マニュアルを表示します(Keep Talking And Nobody Explodes用)")
-    embed2.add.field(
-        name="/order", value="現在ボイスチャットにいるユーザに(1..n)までの番号をランダムに割り当てます")
     await ctx.send(embed=embed)
 
 

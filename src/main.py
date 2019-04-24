@@ -6,9 +6,11 @@ import stage
 import formatter
 import randomizer
 import original_exc
+import weapon
 from discord.ext import commands
 
 STATUS_ERROR_MESSAGE = "エラーでし！！！！！"
+RANDOM_ARGS_ERROR_MESSAGE = "引数に割り当てるブキの数を指定するでし！！！！！"
 
 BOT_TOKEN = settings.BT
 REGULAR_COLOR = 0x95d10a
@@ -125,9 +127,10 @@ async def sake(ctx):
     embed = formatter.salmon_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
-# TODO:randomコマンドを実装
+
+# 現在存在するブキからランダムに引数個割り当てるコマンド(武器種は全て別にする)
 @bot.command()
-async def ran2(ctx):
+async def random(ctx, arg):
     try:
         msgList = stage.get_salmon()
     except original_exc.BadStatusException:
@@ -187,6 +190,8 @@ async def info(ctx):
     embed.add_field(name="作成者", value="Yusuke Sabi")
     embed.add_field(
         name="ソースコード", value="https://github.com/YusukeSabi/DiscordBot")
+    embed.add_field(
+        name="使用API", value="https://github.com/fetus-hina/stat.ink/tree/master/doc/api-2")
     await ctx.send(embed=embed)
 
 

@@ -128,16 +128,26 @@ async def sake(ctx):
     await ctx.send(embed=embed)
 
 
-# 現在存在するブキからランダムに引数個割り当てるコマンド(武器種は全て別にする)
+# 現在存在するブキからランダムに引数個割り当てるコマンド(ブキ種は全く考えない)
+# ボイスチャンネル"General"にいる人にブキを割り当てる
 @bot.command()
-async def random(ctx, arg):
+async def random(ctx):
     try:
-        msgList = stage.get_salmon()
+        # Voice Channelの取得、現在はチャンネル名が"General"であるチャンネルのみとしている
+        voice_channel = discord.utils.get(
+            ctx.message.guild.voice_channels, name="General")
+        channel_members = voice_channel.members
+        weapon_list = randomizer.get_random_weapon(channel_members)
+
+        embed = discord.Embed(title="ランダムにブキを割り当てたでし！", color=BOMB_COLOR)
+        for weapon in weapon_list:
+            embed.add_field(name=weapon[0] + "!", value=weapon[1])
+        await ctx.send(embed=embed)
+    except original_exc.NoMemberInVoiceChannelException as e:
+        await ctx.send(e.message)
     except original_exc.BadStatusException:
         await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**ランダムにブキを割り当てたでし！**", color=SALMON_COLOR)
-    embed = formatter.salmon_embed_format(embed, msgList)
-    await ctx.send(embed=embed)
+
 
 
 @bot.command()
@@ -150,16 +160,16 @@ async def bomb(ctx):
 
 @bot.command()
 async def order(ctx):
-    memberList = {}
+    weapon_list = {}
     try:
         # Voice Channelの取得、現在はチャンネル名が"General"であるチャンネルのみとしている
         voice_channel = discord.utils.get(
             ctx.message.guild.voice_channels, name="General")
         channel_members = voice_channel.members
-        memberList = randomizer.get_random_order(channel_members)
+        weapon_list = randomizer.get_random_order(channel_members)
 
         embed = discord.Embed(title="ランダムに順番を割り当てたでし！", color=BOMB_COLOR)
-        for member in memberList:
+        for member in weapon_list:
             embed.add_field(name=str(member[0]+1) + "番目!", value=member[1])
 
         await ctx.send(embed=embed)

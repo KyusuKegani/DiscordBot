@@ -53,6 +53,8 @@ def salmon_embed_format(embed, msgList):
         index += 1
     return embed
 
+# JSONを受け取り、ブキ情報に整形し、そのリストを返す関数
+
 
 # 爆弾解体マニュアルを表示するためのフォーマッタ
 # msgListにはURLが表示されている！単純！

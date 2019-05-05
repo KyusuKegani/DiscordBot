@@ -125,16 +125,27 @@ async def sake(ctx):
     embed = formatter.salmon_embed_format(embed, msgList)
     await ctx.send(embed=embed)
 
-# TODO:randomコマンドを実装
+
+# 現在存在するブキからランダムに引数個割り当てるコマンド(ブキ種は全く考えない)
+# ボイスチャンネル"General"にいる人にブキを割り当てる
 @bot.command()
-async def ran2(ctx):
+async def random(ctx):
     try:
-        msgList = stage.get_salmon()
+        # Voice Channelの取得、現在はチャンネル名が"General"であるチャンネルのみとしている
+        voice_channel = discord.utils.get(
+            ctx.message.guild.voice_channels, name="General")
+        channel_members = voice_channel.members
+        weapon_list = randomizer.get_random_weapon(channel_members)
+        keys = weapon_list.keys()
+
+        embed = discord.Embed(title="ランダムにブキを割り当てたでし！", color=BOMB_COLOR)
+        for key in keys:
+            embed.add_field(name=key + "!", value=weapon_list[key])
+        await ctx.send(embed=embed)
+    except original_exc.NoMemberInVoiceChannelException as e:
+        await ctx.send(e.message)
     except original_exc.BadStatusException:
         await ctx.send(STATUS_ERROR_MESSAGE)
-    embed = discord.Embed(title="**ランダムにブキを割り当てたでし！**", color=SALMON_COLOR)
-    embed = formatter.salmon_embed_format(embed, msgList)
-    await ctx.send(embed=embed)
 
 
 @bot.command()
@@ -147,17 +158,17 @@ async def bomb(ctx):
 
 @bot.command()
 async def order(ctx):
-    memberList = {}
+    member_list = {}
     try:
         # Voice Channelの取得、現在はチャンネル名が"General"であるチャンネルのみとしている
         voice_channel = discord.utils.get(
             ctx.message.guild.voice_channels, name="General")
         channel_members = voice_channel.members
-        memberList = randomizer.get_random_order(channel_members)
+        member_list = randomizer.get_random_order(channel_members)
 
         embed = discord.Embed(title="ランダムに順番を割り当てたでし！", color=BOMB_COLOR)
-        for member in memberList:
-            embed.add_field(name=str(member[0]+1) + "番目!", value=member[1])
+        for member in member_list:
+            embed.add_field(name=str(member[0] + 1) + "番目!", value=member[1])
 
         await ctx.send(embed=embed)
     except original_exc.NoMemberInVoiceChannelException as e:
@@ -172,7 +183,8 @@ bot.remove_command("help")
 async def help(ctx):
     embed = discord.Embed(
         title="ブキチBot(改)",
-        description="コマンドは https://github.com/YusukeSabi/DiscordBot/blob/master/commands.md",
+        description=
+        "コマンドは https://github.com/YusukeSabi/DiscordBot/blob/master/commands.md",
         color=EMBED_COLOR)
     await ctx.send(embed=embed)
 
@@ -187,6 +199,9 @@ async def info(ctx):
     embed.add_field(name="作成者", value="Yusuke Sabi")
     embed.add_field(
         name="ソースコード", value="https://github.com/YusukeSabi/DiscordBot")
+    embed.add_field(
+        name="使用API",
+        value="https://github.com/fetus-hina/stat.ink/tree/master/doc/api-2")
     await ctx.send(embed=embed)
 
 

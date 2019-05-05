@@ -43,4 +43,3 @@
     * pkill -KILL -f "python main.py"を使った
 * hook用のスクリプトファイルには`chmod +x`をする必要があるが、CodeDeploy Agent側で自動的にchmodしてくれる
     * ログファイルにおいてもWARNなのでそんなに気にしなくていい、HOOKの実行結果は/opt/codedeploy-agent/deployment-root/deployment-logs/*のほうが詳しい
-    

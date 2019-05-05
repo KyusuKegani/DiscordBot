@@ -9,7 +9,6 @@ import original_exc
 from discord.ext import commands
 
 STATUS_ERROR_MESSAGE = "エラーでし！！！！！"
-RANDOM_ARGS_ERROR_MESSAGE = "引数に割り当てるブキの数を指定するでし！！！！！"
 
 BOT_TOKEN = settings.BT
 REGULAR_COLOR = 0x95d10a
@@ -159,16 +158,16 @@ async def bomb(ctx):
 
 @bot.command()
 async def order(ctx):
-    weapon_list = {}
+    member_list = {}
     try:
         # Voice Channelの取得、現在はチャンネル名が"General"であるチャンネルのみとしている
         voice_channel = discord.utils.get(
             ctx.message.guild.voice_channels, name="General")
         channel_members = voice_channel.members
-        weapon_list = randomizer.get_random_order(channel_members)
+        member_list = randomizer.get_random_order(channel_members)
 
         embed = discord.Embed(title="ランダムに順番を割り当てたでし！", color=BOMB_COLOR)
-        for member in weapon_list:
+        for member in member_list:
             embed.add_field(name=str(member[0] + 1) + "番目!", value=member[1])
 
         await ctx.send(embed=embed)

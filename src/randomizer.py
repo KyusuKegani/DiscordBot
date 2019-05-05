@@ -1,8 +1,8 @@
 import original_exc
 import random
-import weapon
-# ボイスチャンネルに番号を割り振るためのモジュール
+import weapons
 
+# ボイスチャンネルにいる人に番号を割り振るためのモジュール
 NO_MEMBER_ERROR_MESSAGE = "ボイスチャンネルに誰もいないでし！！！"
 
 
@@ -15,18 +15,19 @@ def get_random_order(channel_members):
             NO_MEMBER_ERROR_MESSAGE)
     else:
         randomizer = random.sample(range(0, member_count), k=member_count)
-        weapon_dct = {}
+        member_dct = {}
         counter = 0
         # Dictのリストに[順番、メンバー名]のように格納
         for member in channel_members:
             # ここでOut of boundsとなるため、0-indexedで行なっている
             # mainの呼び出しのところで1-indexedに変換
-            weapon_dct[randomizer[counter]] = member.name
+            member_dct[randomizer[counter]] = member.name
             counter += 1
 
         # 昇順に表示するようソート
-        weapon_dct = sorted(weapon_dct.items())
-    return weapon_dct
+        member_dct = sorted(member_dct.items())
+    return member_dct
+
 
 # {key: メンバー名, values: ブキ名}の辞書リストを返却する
 def get_random_weapon(channel_members):
@@ -37,9 +38,9 @@ def get_random_weapon(channel_members):
             NO_MEMBER_ERROR_MESSAGE)
     else:
         # get_weaponでAPIから現在のブキの一覧を取得
-        weapon_list = weapon.get_weapon()
+        weapon_list = weapons.get_weapon()
         randomizer = random.sample(range(0, len(weapon_list)), k=member_count)
-        weapon_dct = {}
+        weapon_dct = dict()
         counter = 0
         # Dictのリストに[順番、メンバー名]のように格納
         for member in channel_members:
@@ -47,7 +48,4 @@ def get_random_weapon(channel_members):
             # mainの呼び出しのところで1-indexedに変換
             weapon_dct[member.name] = weapon_list[randomizer[counter]]["name"]["ja_JP"]
             counter += 1
-
-        # 昇順に表示するようソート
-        weapon_dct = sorted(weapon_dct.items())
     return weapon_dct

@@ -1,6 +1,5 @@
 import requests
 import json
-import formatter
 import original_exc
 
 STATUS_OK = 200
@@ -21,5 +20,3 @@ def get_weapon():
         return weapon_list
     else:
         raise original_exc.BadStatusException("BAD STATUS")
-
-

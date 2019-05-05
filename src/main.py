@@ -6,7 +6,6 @@ import stage
 import formatter
 import randomizer
 import original_exc
-import weapon
 from discord.ext import commands
 
 STATUS_ERROR_MESSAGE = "エラーでし！！！！！"
@@ -138,16 +137,16 @@ async def random(ctx):
             ctx.message.guild.voice_channels, name="General")
         channel_members = voice_channel.members
         weapon_list = randomizer.get_random_weapon(channel_members)
+        keys = weapon_list.keys()
 
         embed = discord.Embed(title="ランダムにブキを割り当てたでし！", color=BOMB_COLOR)
-        for weapon in weapon_list:
-            embed.add_field(name=weapon[0] + "!", value=weapon[1])
+        for key in keys:
+            embed.add_field(name=key + "!", value=weapon_list[key])
         await ctx.send(embed=embed)
     except original_exc.NoMemberInVoiceChannelException as e:
         await ctx.send(e.message)
     except original_exc.BadStatusException:
         await ctx.send(STATUS_ERROR_MESSAGE)
-
 
 
 @bot.command()
@@ -170,7 +169,7 @@ async def order(ctx):
 
         embed = discord.Embed(title="ランダムに順番を割り当てたでし！", color=BOMB_COLOR)
         for member in weapon_list:
-            embed.add_field(name=str(member[0]+1) + "番目!", value=member[1])
+            embed.add_field(name=str(member[0] + 1) + "番目!", value=member[1])
 
         await ctx.send(embed=embed)
     except original_exc.NoMemberInVoiceChannelException as e:
@@ -185,7 +184,8 @@ bot.remove_command("help")
 async def help(ctx):
     embed = discord.Embed(
         title="ブキチBot(改)",
-        description="コマンドは https://github.com/YusukeSabi/DiscordBot/blob/master/commands.md",
+        description=
+        "コマンドは https://github.com/YusukeSabi/DiscordBot/blob/master/commands.md",
         color=EMBED_COLOR)
     await ctx.send(embed=embed)
 
@@ -201,7 +201,8 @@ async def info(ctx):
     embed.add_field(
         name="ソースコード", value="https://github.com/YusukeSabi/DiscordBot")
     embed.add_field(
-        name="使用API", value="https://github.com/fetus-hina/stat.ink/tree/master/doc/api-2")
+        name="使用API",
+        value="https://github.com/fetus-hina/stat.ink/tree/master/doc/api-2")
     await ctx.send(embed=embed)
 
 

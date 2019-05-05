@@ -3,6 +3,7 @@ import mock
 import os
 import sys
 import json
+import requests
 path = os.path.join(os.path.dirname(__file__), '../src')
 sys.path.append(path)
 import src.randomizer as rm
